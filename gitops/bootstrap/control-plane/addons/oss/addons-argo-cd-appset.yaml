@@ -22,18 +22,6 @@ spec:
                   - key: enable_argocd
                     operator: In
                     values: ['true']
-          - clusters:
-              selector:
-                matchLabels:
-                  environment: control-plane
-              values:
-                addonChartVersion: '{{metadata.labels.argocd_chart_version}}'
-          - clusters:
-              selector:
-                matchLabels:
-                  environment: prod
-              values:
-                addonChartVersion: '{{metadata.labels.argocd_chart_version}}'
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}
