@@ -1,0 +1,17 @@
+existingObjstoreSecret: "thanos-config-remote" # (1)
+query:
+  stores:
+    - "remote-cluster.example.com:10901"
+  replicaLabel: [prometheus_replica] # (2)
+bucketweb:
+  enabled: false # (4)
+compactor:
+  enabled: false # (5)
+storegateway:
+  enabled: true # (6)
+ruler:
+  enabled: false
+metrics: # (8)
+  enabled: false
+  serviceMonitor:
+    enabled: false

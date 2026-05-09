@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-thanos
+  name: addons-thanos-extra
 spec:
   syncPolicy:
     preserveResourcesOnDeletion: true
@@ -18,7 +18,7 @@ spec:
 
   template:
     metadata:
-      name: addon-{{name}}-thanos
+      name: addon-{{name}}-thanos-extra
     spec:
       project: default
       sources:
@@ -29,10 +29,10 @@ spec:
           repoURL: '{{values.addonChartRepository}}'
           targetRevision: '{{values.addonChartVersion}}'
           helm:
-            releaseName: 'thanos'
+            releaseName: 'thanos-extra'
             ignoreMissingValueFiles: true
             valueFiles:
-              - $values/{{metadata.annotations.addons_repo_basepath}}environments/default/addons/thanos/values.yaml
+              - $values/{{metadata.annotations.addons_repo_basepath}}environments/default/addons/thanos-extra/values.yaml
       destination:
         namespace: '{{values.addonChartRepositoryNamespace}}'
         name: '{{name}}'

@@ -1,0 +1,33 @@
+grafana:
+  enabled: true
+
+alertmanager:
+  enabled: true
+
+prometheus:
+  thanosService:
+    enabled: true
+  prometheusSpec:
+    thanos:
+      objectStorageConfig:
+        existingSecret:
+          name: thanos-config
+          key: objstore.yml
+    resources:
+      # Set appropriate resource constraints
+      limits:
+        cpu: 1000m
+        memory: 4Gi
+      requests:
+        cpu: 100m
+        memory: 250Mi
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          resources:
+            requests:
+              # Configure the PVC size for the deployment
+              storage: 8Gi
+
+
+

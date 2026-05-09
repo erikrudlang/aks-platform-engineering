@@ -1,0 +1,11 @@
+thanosService:
+  enabled: true
+prometheusSpec:
+  # Increase replica count
+  replicas: 2
+  # Configure the object storage for thanos
+  thanos:
+    objectStorageConfig:
+      existingSecret:
+        name: thanos-config
+        key: objstore.yml

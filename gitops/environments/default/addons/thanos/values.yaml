@@ -1,0 +1,18 @@
+existingObjstoreSecret: "thanos-config" # (1)
+query:
+  replicaLabel: [prometheus_replica] # (2)
+  dnsDiscovery:
+    sidecarsService: prometheus-kube-prometheus-thanos-discovery # (3)
+    sidecarsNamespace: default
+bucketweb:
+  enabled: true # (4)
+compactor:
+  enabled: true # (5)
+storegateway:
+  enabled: true # (6)
+ruler:
+  enabled: false
+metrics: # (8)
+  enabled: true
+  serviceMonitor:
+    enabled: true
