@@ -31,6 +31,11 @@ spec:
           helm:
             releaseName: 'loki-primary'
             ignoreMissingValueFiles: true
+            values: |
+              storage_config:
+                object_store:
+                  azure:
+                    account_key: {{metadata.annotations.azure_account_key}}
             valueFiles:
               - $values/{{metadata.annotations.addons_repo_basepath}}environments/default/addons/loki-primary/values.yaml
       destination:
