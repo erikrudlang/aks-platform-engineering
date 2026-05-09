@@ -11,5 +11,6 @@ additionalDeployments:
     deployment:
       containers:
       - name: manager
-        args:
-          --crd-pattern: "documentdb.azure.com/*;managedidentity.azure.com/*;keyvault.azure.com/*"
+        args: 
+          --crd-pattern: "resources.azure.com/*;containerservice.azure.com/*;keyvault.azure.com/*;managedidentity.azure.com/*;eventhub.azure.com/*;storage.azure.com/*;postgres.database.azure.com/*"
+
