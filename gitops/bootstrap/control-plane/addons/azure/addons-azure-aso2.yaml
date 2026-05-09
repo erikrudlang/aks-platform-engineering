@@ -29,6 +29,8 @@ spec:
   template:
     metadata:
       name: addon-{{name}}-aso2
+      finalizers:
+        - resources-finalizer.argocd.argoproj.io
     spec:
       project: default
       sources:
