@@ -12,7 +12,7 @@ spec:
     - clusters:
         values:
           addonChart: kube-prometheus-stack
-          addonChartVersion: '{{metadata.labels.prometheus_chart_version}}'
+          addonChartVersion: '84.5.0'
           addonChartRepositoryNamespace: monitoring
           addonChartRepository: https://prometheus-community.github.io/helm-charts
         selector:
