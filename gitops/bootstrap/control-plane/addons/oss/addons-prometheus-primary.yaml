@@ -13,7 +13,6 @@ spec:
         values:
           addonChart: kube-prometheus-stack
           addonChartVersion: '84.5.0'
-          addonChartRepositoryNamespace: monitoring
           addonChartRepository: https://prometheus-community.github.io/helm-charts
         selector:
           matchLabels:
@@ -36,7 +35,7 @@ spec:
             valueFiles:
               - $values/{{metadata.annotations.addons_repo_basepath}}environments/default/addons/prometheus-primary/values.yaml
       destination:
-        namespace: '{{values.addonChartRepositoryNamespace}}'
+        namespace: monitoring
         name: '{{name}}'
       syncPolicy:
         automated:

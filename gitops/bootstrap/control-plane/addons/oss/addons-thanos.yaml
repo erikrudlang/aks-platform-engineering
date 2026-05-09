@@ -34,7 +34,7 @@ spec:
             valueFiles:
               - $values/{{metadata.annotations.addons_repo_basepath}}environments/default/addons/thanos/values.yaml
       destination:
-        namespace: '{{values.addonChartRepositoryNamespace}}'
+        namespace: monitoring
         name: '{{name}}'
       syncPolicy:
         automated:
