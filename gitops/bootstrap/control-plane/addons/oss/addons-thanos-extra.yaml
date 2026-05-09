@@ -10,8 +10,8 @@ spec:
     - clusters:
         values:
           addonChart: thanos
-          addonChartVersion: 17.2.6
-          addonChartRepository: https://charts.bitnami.com/bitnami
+          addonChartVersion: 17.3.1
+          addonChartRepository: oci://registry-1.docker.io/bitnamicharts
         selector:
           matchLabels:
             environment: control-plane
