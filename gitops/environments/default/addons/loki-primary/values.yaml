@@ -1,31 +1,63 @@
 loki:
   auth_enabled: false
+  schemaConfig:
+    configs:
+      - from: "2024-04-01"
+        store: tsdb
+        object_store: filesystem
+        schema: v13
+        index:
+          prefix: index_
+          period: 24h
   storage:
-    bucketNames:
-      chunks: loki-chunks
-    type: gcs
+    type: filesystem
+  limits_config:
+    max_cache_freshness_per_query: 10m
+    query_timeout: 300s
+    reject_old_samples: true
+    reject_old_samples_max_age: 168h
+    split_queries_by_interval: 15m
+    volume_enabled: true
+
+# Deploy as single binary instead of microservices
+deploymentMode: SingleBinary
+
+singleBinary:
+  replicas: 1
+  persistence:
+    enabled: true
+    size: 10Gi
+  resources: {}
+  affinity: |
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchLabels:
+            {{- include "loki.singleBinaryLabels" . | nindent 10 }}
+        topologyKey: kubernetes.io/hostname
+
+# Disable microservices components
 write:
-  replicas: 3
+  replicas: 0
 read:
-  replicas: 3
+  replicas: 0
 backend:
-  replicas: 3
+  replicas: 0
 
 serviceAccount:
   create: true
   name: loki
-  annotatate:
-    ##
-    # With this annotation, we can map a GCP Identity with our K8S service account.l
-    iam.gke.io/gcp-service-account: loki@trhyo-ops.iam.gserviceaccount.com
+  automountServiceAccountToken: true
 
-ingress:
-  enabled: true
-  hosts: ['loki.trhyo.com']
-##
-# Disable non-used objects
+# Disable gateway
 gateway:
   enabled: false
+
+# Disable ingress
+ingress:
+  enabled: false
+
+# Disable testing and monitoring
 test:
   enabled: false
 monitoring:
@@ -35,11 +67,18 @@ monitoring:
     enabled: false
   serviceMonitor:
     enabled: false
-  metricsInstance:
-    enabled: false
   selfMonitoring:
     enabled: false
     grafanaAgent:
       installOperator: false
   lokiCanary:
     enabled: false
+
+# Enable sidecar for rules
+sidecar:
+  rules:
+    enabled: true
+    label: loki_rule
+    folder: /rules
+    resource: both
+    watchMethod: WATCH
