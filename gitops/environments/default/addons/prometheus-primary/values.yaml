@@ -5,9 +5,13 @@ alertmanager:
   enabled: true
 
 prometheus:
-  server:
-    persistentVolume:
-      enabled: true
+  externalLabels:
+      cluster: primary
+      prometheus: primary
+      prometheus_replica: $(POD_NAME)
+    # Enable replicaLabel for deduplication
+  replicaExternalLabelName: prometheus_replica
+  prometheusExternalLabelName: prometheus
   thanosService:
     enabled: true
   prometheusSpec:
