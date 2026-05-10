@@ -5,7 +5,7 @@ metadata:
   name: addons-loki
 spec:
   syncPolicy:
-    preserveResourcesOnDeletion: true
+    preserveResourcesOnDeletion: false
   generators:
     - clusters:
         values:
@@ -13,8 +13,10 @@ spec:
           addonChartVersion: 13.6.2
           addonChartRepository: https://grafana-community.github.io/helm-charts
         selector:
-          matchLabels:
-            environment: control-plane
+          matchExpressions:
+            - key: enable_thanos_extra
+              operator: In
+              values: ['true']
 
   template:
     metadata:
