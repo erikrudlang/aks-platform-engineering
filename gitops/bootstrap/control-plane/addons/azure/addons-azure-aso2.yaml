@@ -11,16 +11,6 @@ spec:
         mergeKeys: [server]
         generators:
           - clusters:
-              values:
-                addonChart: azure-service-operator
-                addonChartVersion: '{{metadata.labels.azure_aso2_chart_version}}'
-                addonChartRepository: https://raw.githubusercontent.com/Azure/azure-service-operator/main/v2/charts
-              selector:
-                matchExpressions:
-                  - key: enable_aso2
-                    operator: In
-                    values: ['true']
-          - clusters:
               selector:
                 matchLabels:
                   environment: control-plane
