@@ -1,41 +1,66 @@
-auth_enabled: false
-schema_config:
-  configs:
-  - from: "2028-01-05" # <---- A date in the future
-    index:
-      period: 24h
-      prefix: index_
-    object_store: azure
-    schema: v13
-    store: tsdb
-storage_config:
-  tsdb_shipper:
-    active_index_directory: /data/tsdb-index
-    cache_location: /data/tsdb-cache
-    index_gateway_client:
-      # only applicable if using microservices where index-gateways are independently deployed.
-      # This example is using kubernetes-style naming.
-      server_address: ""
-  use_thanos_objstore: true
-  object_store:
+loki:
+  schemaConfig:
+    configs:
+      - from: "2028-04-01"
+        store: tsdb
+        object_store: azure
+        schema: v13
+        index:
+          prefix: loki_index_
+          period: 24h
+  ingester:
+    chunk_encoding: snappy
+
+  storage:
+    type: azure
     azure:
-      account_name: myaccount
-      account_key: ${SECRET_ACCESS_KEY} # loki expands environment variables
-      container_name: aks-demo-loki-data
-query_scheduler:
-  # the TSDB index dispatches many more, but each individually smaller, requests. 
-  # We increase the pending request queue sizes to compensate.
-  max_outstanding_requests_per_tenant: 32768
+      # Name of the Azure Blob Storage account
+      accountName: staksdemo
+      # Key associated with the Azure Blob Storage account
+      accountKey: <your-account-key>
+      # Flag indicating whether to use Azure Managed Identity for authentication
+      useManagedIdentity: false
+      # Flag indicating whether to use a federated token for authentication
+      useFederatedToken: false
+      # Domain suffix of the Azure Blob Storage service endpoint (e.g., core.windows.net)
+      endpointSuffix: core.windows.net
+    bucketNames:
+      chunks: "aks-demo-loki-chunks"
+      ruler: "aks-demo-loki-ruler"
+      admin: "aks-demo-loki-admin"
+
+
+deploymentMode: Monolithic
+
+singleBinary:
+  replicas: 1
+
+# Zero out replica counts of other deployment modes
+backend:
+  replicas: 0
+read:
+  replicas: 0
+write:
+  replicas: 0
+
+ingester:
+  replicas: 0
 querier:
-  # Each `querier` component process runs a number of parallel workers to process queries simultaneously.
-  # You may want to adjust this up or down depending on your resource usage
-  # (more available cpu and memory can tolerate higher values and vice versa),
-  # but we find the most success running at around `16` with tsdb
-  max_concurrent: 16
-storage_config:
-  tsdb_shipper:
-    index_gateway_client:
-      server_address: ""
-  use_thanos_objstore: false
-tracing:
-  enabled: false
+  replicas: 0
+queryFrontend:
+  replicas: 0
+queryScheduler:
+  replicas: 0
+distributor:
+  replicas: 0
+compactor:
+  replicas: 0
+indexGateway:
+  replicas: 0
+bloomPlanner:
+  replicas: 0
+bloomBuilder:
+  replicas: 0
+bloomGateway:
+  replicas: 0
+
