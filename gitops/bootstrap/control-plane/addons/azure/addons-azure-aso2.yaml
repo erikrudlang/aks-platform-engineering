@@ -7,17 +7,14 @@ spec:
   syncPolicy:
     preserveResourcesOnDeletion: false
   generators:
-    - merge:
-        mergeKeys: [server]
-        generators:
-          - clusters:
-              selector:
-                matchLabels:
-                  environment: control-plane
-              values:
-                addonChart: azure-service-operator
-                addonChartVersion: '{{metadata.labels.azure_aso2_chart_version}}'
-                addonChartRepository: https://raw.githubusercontent.com/Azure/azure-service-operator/main/v2/charts
+    - clusters:
+        selector:
+          matchLabels:
+            environment: control-plane
+        values:
+          addonChart: azure-service-operator
+          addonChartVersion: '{{metadata.labels.azure_aso2_chart_version}}'
+          addonChartRepository: https://raw.githubusercontent.com/Azure/azure-service-operator/main/v2/charts
   template:
     metadata:
       name: addon-{{name}}-aso2
