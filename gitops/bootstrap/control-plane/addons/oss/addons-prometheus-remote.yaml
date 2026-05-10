@@ -33,7 +33,7 @@ spec:
                     values: ['true']
   template:
     metadata:
-      name: addon-'{{.path.basename}}-{{.name}}'-prometheus-remote
+      name: addon-{{.path.basename}}-{{.name}}-prometheus-remote
     spec:
       project: default
       sources:
