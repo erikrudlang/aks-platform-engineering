@@ -1,12 +1,4 @@
 auth_enabled: false
-common:
-  compactor_grpc_address: 'loki.istio-system.svc.cluster.local:9095'
-  path_prefix: /var/loki
-  replication_factor: 1
-  storage:
-    filesystem:
-      chunks_directory: /var/loki/chunks
-      rules_directory: /var/loki/rules
 frontend:
   scheduler_address: ""
   tail_proxy_url: ""
