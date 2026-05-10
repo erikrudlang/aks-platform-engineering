@@ -5,8 +5,7 @@ metadata:
   name: addons-prometheus-primary
 spec:
   syncPolicy:
-    preserveResourcesOnDeletion: true
-  # deploy prometheus, grafana, 
+    preserveResourcesOnDeletion: false
 
   generators:
     - clusters:
@@ -19,7 +18,7 @@ spec:
             environment: control-plane
   template:
     metadata:
-      name: addon-{{.name}}'-prometheus-primary
+      name: addon-{{name}}-prometheus-primary
     spec:
       project: default
       sources:
