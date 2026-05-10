@@ -5,7 +5,7 @@ metadata:
   name: addons-thanos-extra
 spec:
   syncPolicy:
-    preserveResourcesOnDeletion: true
+    preserveResourcesOnDeletion: false
   generators:
     - clusters:
         values:
@@ -13,19 +13,16 @@ spec:
           addonChartVersion: 17.3.1
           addonChartRepository: registry-1.docker.io/bitnamicharts
         selector:
-          selector:
-            matchExpressions:
-              - key: enable_thanos_extra
-                operator: In
-                values: ['true']
+          matchExpressions:
+            - key: enable_thanos_extra
+              operator: In
+              values: ['true']
           # matchLabels:
           #   environment: control-plane
 
   template:
     metadata:
       name: addon-{{name}}-thanos-extra
-      finalizers:
-        - resources-finalizer.argocd.argoproj.io
     spec:
       project: default
       sources:
