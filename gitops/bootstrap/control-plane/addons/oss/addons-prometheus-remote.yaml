@@ -5,7 +5,7 @@ metadata:
   name: addons-prometheus-remote
 spec:
   syncPolicy:
-    preserveResourcesOnDeletion: true
+    preserveResourcesOnDeletion: false
   # deploy prometheus with thanos sidecar to all tenants in all workload clusters
   generators:
     # matrix 'parent' generator
@@ -14,14 +14,14 @@ spec:
           # git generator, 'child' #1
           - git:
               repoURL: '{{metadata.annotations.addons_repo_url}}'
-              revision: HEAD
+              revision: '{{metadata.annotations.addons_repo_revision}}'
               directories:
                 - path: '{{metadata.annotations.addons_repo_basepath}}apps/development'
           # cluster generator, 'child' #2
           - clusters:
               values:
                 addonChart: prometheus
-                addonChartVersion: '29.6.0'
+                addonChartVersion: 29.6.0
                 addonChartRepository: https://prometheus-community.github.io/helm-charts
               selector:
                 matchExpressions:
