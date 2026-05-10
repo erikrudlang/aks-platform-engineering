@@ -1,3 +1,5 @@
+image:
+  repository: "bitnamilegacy/thanos"
 existingObjstoreSecret: "thanos-config" # (1)
 query:
   replicaLabel: [prometheus_replica] # (2)

@@ -1,3 +1,5 @@
+image:
+  repository: "bitnamilegacy/thanos"
 existingObjstoreSecret: "thanos-config-remote" # (1)
 query:
   stores:
