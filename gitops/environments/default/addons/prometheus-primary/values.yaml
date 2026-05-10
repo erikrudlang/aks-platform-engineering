@@ -5,6 +5,9 @@ alertmanager:
   enabled: true
 
 prometheus:
+  server:
+    persistentVolume:
+      enabled: true
   thanosService:
     enabled: true
   prometheusSpec:
