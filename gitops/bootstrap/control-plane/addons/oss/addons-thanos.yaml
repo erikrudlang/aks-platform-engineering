@@ -13,10 +13,8 @@ spec:
           addonChartVersion: 17.3.1
           addonChartRepository: registry-1.docker.io/bitnamicharts
         selector:
-          matchExpressions:
-            - key: enable_thanos_extra
-              operator: In
-              values: ['true']
+          matchLabels:
+            environment: control-plane
 
   template:
     metadata:
