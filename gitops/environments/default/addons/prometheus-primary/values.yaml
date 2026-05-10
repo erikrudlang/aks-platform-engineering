@@ -15,6 +15,17 @@ prometheus:
   thanosService:
     enabled: true
   prometheusSpec:
+    additionalArgs:
+        - name: storage.tsdb.min-block-duration
+          value: 2h
+        - name: storage.tsdb.max-block-duration
+          value: 2h
+        - name: storage.tsdb.retention.time
+          value: 2d
+        - name: storage.tsdb.path
+          value: /prometheus
+        - name: web.enable-lifecycle
+          value: "true"  
     thanos:
       objectStorageConfig:
         existingSecret:
