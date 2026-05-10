@@ -17,9 +17,9 @@ prometheus:
   prometheusSpec:
     additionalArgs:
         - name: storage.tsdb.min-block-duration
-          value: 2h
+          value: 5m
         - name: storage.tsdb.max-block-duration
-          value: 2h
+          value: 5m
         - name: storage.tsdb.retention.time
           value: 2d
         - name: storage.tsdb.path
