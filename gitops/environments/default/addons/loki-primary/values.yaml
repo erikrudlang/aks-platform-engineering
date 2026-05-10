@@ -17,7 +17,7 @@ loki:
       # Name of the Azure Blob Storage account
       accountName: staksdemo
       # Key associated with the Azure Blob Storage account
-      accountKey: <your-account-key>
+      accountKey: ${SECRET_ACCESS_KEY}
       # Flag indicating whether to use Azure Managed Identity for authentication
       useManagedIdentity: false
       # Flag indicating whether to use a federated token for authentication
