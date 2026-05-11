@@ -10,7 +10,7 @@ spec:
     - clusters:
         selector:
           matchLabels:
-            environment: control
+            environment: control-plane
         values:
           addonChart: azure-service-operator
           addonChartVersion: '{{metadata.labels.azure_aso2_chart_version}}'
