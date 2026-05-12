@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: simpleapplication2
+  namespace: argocd
+  labels:
+    environment: development
+    component: simpleapplication2
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/erikrudlang/simpleapplication2-manifests.git
+    targetRevision: main
+    path: development
+  destination:
+    server: https://kubernetes.default.svc
+    namespace:simpleapplication2-development
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
