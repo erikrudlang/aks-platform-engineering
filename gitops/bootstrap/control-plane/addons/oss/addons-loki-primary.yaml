@@ -15,14 +15,6 @@ spec:
         selector:
           matchLabels:
             environment: control-plane
-    - clusters:
-        values:
-          addonChart: loki
-          addonChartVersion: 13.6.2
-          addonChartRepository: https://grafana-community.github.io/helm-charts
-        selector:
-          matchLabels:
-            environment: workload
 
   template:
     metadata:
