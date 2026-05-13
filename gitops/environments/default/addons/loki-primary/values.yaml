@@ -16,9 +16,9 @@ loki:
 
   memcached:
     chunk_cache:
-      enabled: true
+      enabled: false
     results_cache:
-      enabled: true
+      enabled: false
   storage:
     type: azure
     azure:
