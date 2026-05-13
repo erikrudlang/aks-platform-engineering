@@ -1,4 +1,7 @@
 loki:
+  commonConfig:
+    replication_factor: 1
+
   schemaConfig:
     configs:
       - from: "2028-04-01"
