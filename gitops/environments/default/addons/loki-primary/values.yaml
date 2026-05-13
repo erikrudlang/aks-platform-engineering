@@ -14,6 +14,11 @@ loki:
   ingester:
     chunk_encoding: snappy
 
+  memcached:
+    chunk_cache:
+      enabled: true
+    results_cache:
+      enabled: true
   storage:
     type: azure
     azure:
