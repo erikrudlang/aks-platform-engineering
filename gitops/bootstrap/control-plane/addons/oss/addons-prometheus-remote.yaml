@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-prometheus-primary
+  name: addons-prometheus-remote
 spec:
   syncPolicy:
     preserveResourcesOnDeletion: false
@@ -20,7 +20,7 @@ spec:
               values: ['true']
   template:
     metadata:
-      name: addon-{{name}}-prometheus-primary
+      name: addon-{{name}}-prometheus-remote
     spec:
       project: default
       sources:
@@ -31,10 +31,10 @@ spec:
           repoURL: '{{values.addonChartRepository}}'
           targetRevision: '{{values.addonChartVersion}}'
           helm:
-            releaseName: 'prometheus-primary'
+            releaseName: 'prometheus-remote'
             ignoreMissingValueFiles: true
             valueFiles:
-              - $values/{{metadata.annotations.addons_repo_basepath}}environments/default/addons/prometheus-primary/values.yaml
+              - $values/{{metadata.annotations.addons_repo_basepath}}environments/default/addons/prometheus-remote/values.yaml
       destination:
         namespace: monitoring
         name: '{{name}}'
