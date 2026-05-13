@@ -8,32 +8,46 @@ spec:
     preserveResourcesOnDeletion: false
   # deploy prometheus with thanos sidecar to all tenants in all workload clusters
   generators:
+    - clusters:
+          values:
+            addonChart: prometheus
+            addonChartVersion: 29.6.0
+            addonChartRepository: https://prometheus-community.github.io/helm-charts
+          selector:
+            matchExpressions:
+              - key: environment
+                operator: NotIn
+                values: ['control-plane']
+              - key: enable_prometheus
+                operator: In
+                values: ['true']
     # matrix 'parent' generator
-    - matrix:
-        generators:
-          # git generator, 'child' #1
-          - git:
-              repoURL: https://github.com/erikrudlang/aks-platform-engineering
-              revision: main
-              directories:
-                - path: ./gitops/apps/development'
-          # cluster generator, 'child' #2
-          - clusters:
-              values:
-                addonChart: prometheus
-                addonChartVersion: 29.6.0
-                addonChartRepository: https://prometheus-community.github.io/helm-charts
-              selector:
-                matchExpressions:
-                  - key: environment
-                    operator: NotIn
-                    values: ['control-plane']
-                  - key: enable_prometheus
-                    operator: In
-                    values: ['true']
+    # - matrix:
+    #     generators:
+    #       # git generator, 'child' #1
+    #       - git:
+    #           repoURL: https://github.com/erikrudlang/aks-platform-engineering
+    #           revision: main
+    #           directories:
+    #             - path: ./gitops/apps/development'
+    #       # cluster generator, 'child' #2
+    #       - clusters:
+    #           values:
+    #             addonChart: prometheus
+    #             addonChartVersion: 29.6.0
+    #             addonChartRepository: https://prometheus-community.github.io/helm-charts
+    #           selector:
+    #             matchExpressions:
+    #               - key: environment
+    #                 operator: NotIn
+    #                 values: ['control-plane']
+    #               - key: enable_prometheus
+    #                 operator: In
+    #                 values: ['true']
   template:
     metadata:
-      name: addon-{{.path.basename}}-{{.name}}-prometheus-remote
+      # name: addon-{{.path.basename}}-{{.name}}-prometheus-remote
+      name: addon-{{name}}-prometheus-remote
     spec:
       project: default
       sources:
@@ -49,7 +63,8 @@ spec:
             valueFiles:
               - $values/{{metadata.annotations.addons_repo_basepath}}environments/default/addons/prometheus-remote/values.yaml
       destination:
-        namespace: '{{.path.basename}}'
+        # namespace: '{{.path.basename}}'
+        namespace: monitoring
         name: '{{name}}'
       syncPolicy:
         automated:
