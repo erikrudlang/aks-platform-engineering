@@ -2,16 +2,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-otel-collector
+  name: addons-otel-operator
 spec:
   syncPolicy:
     preserveResourcesOnDeletion: false
   generators:
     - clusters:
         values:
-          addonChart: otel-dotnet-sidecar
-          addonChartVersion: 0.2.0
-          addonChartRepository: acraksdemo.azurecr.io/helm
+          addonChart: opentelemetry-operator
+          addonChartVersion: 0.112.2
+          addonChartRepository: https://open-telemetry.github.io/opentelemetry-helm-charts
         selector:
           matchExpressions:
             - key: enable_otel_operator
@@ -20,7 +20,7 @@ spec:
 
   template:
     metadata:
-      name: addon-{{name}}-otel-dotnet-sidecar
+      name: addon-{{name}}-otel-operator
     spec:
       project: default
       sources:
@@ -31,12 +31,12 @@ spec:
           repoURL: '{{values.addonChartRepository}}'
           targetRevision: '{{values.addonChartVersion}}'
           helm:
-            releaseName: 'otel-dotnet-sidecar'
+            releaseName: 'otel-operator'
             ignoreMissingValueFiles: true
             valueFiles:
-              - $values/{{metadata.annotations.addons_repo_basepath}}environments/default/addons/otel-dotnet-sidecar/values.yaml
+              - $values/{{metadata.annotations.addons_repo_basepath}}environments/default/addons/otel-operator/values.yaml
       destination:
-        namespace: aspireapp
+        namespace: monitoring
         name: '{{name}}'
       syncPolicy:
         automated:
