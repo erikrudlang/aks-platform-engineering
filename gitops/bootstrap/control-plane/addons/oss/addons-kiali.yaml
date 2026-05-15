@@ -12,10 +12,8 @@ spec:
           addonChartVersion: 0.2.0
           addonRepoUrl: oci://acraksdemo.azurecr.io/helm/nginx-deployment
         selector:
-          matchExpressions:
-            - key: enable_otel_operator
-              operator: In
-              values: ['true']
+          matchLabels:
+            environment: control-plane
 
   template:
     metadata:
