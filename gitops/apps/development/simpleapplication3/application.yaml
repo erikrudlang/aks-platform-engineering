@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: simpleapplication3
+  name: development-simpleapplication3
   namespace: argocd
   labels:
     environment: development

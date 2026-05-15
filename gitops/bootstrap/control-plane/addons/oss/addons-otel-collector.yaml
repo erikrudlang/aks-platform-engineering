@@ -10,7 +10,7 @@ spec:
     - clusters:
         values:
           addonChart: otel-dotnet-sidecar
-          addonChartVersion: 0.2.0
+          addonChartVersion: 0.1.0
           addonChartRepository: acraksdemo.azurecr.io/helm
         selector:
           matchExpressions:
