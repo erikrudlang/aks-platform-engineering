@@ -8,6 +8,9 @@ spec:
     preserveResourcesOnDeletion: false
   generators:
     - clusters:
+        values:
+          addonChartVersion: 0.2.0
+          addonRepoUrl: oci://acraksdemo.azurecr.io/helm/nginx-deployment
         selector:
           matchExpressions:
             - key: enable_otel_operator
@@ -23,9 +26,9 @@ spec:
         - repoURL: '{{metadata.annotations.addons_repo_url}}'
           targetRevision: '{{metadata.annotations.addons_repo_revision}}'
           ref: values
-        - repoURL: acraksdemo.azurecr.io
-          path: helm/otel-dotnet-sidecar
-          targetRevision: 0.2.0
+        - repoURL: '{{values.addonRepoUrl}}'
+          path: .
+          targetRevision: '{{values.addonChartVersion}}'
       destination:
         namespace: aspireapp
         name: '{{name}}'
