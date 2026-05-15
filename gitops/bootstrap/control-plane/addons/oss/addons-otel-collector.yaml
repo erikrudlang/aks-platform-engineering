@@ -9,9 +9,8 @@ spec:
   generators:
     - clusters:
         values:
-          addonChart: otel-dotnet-sidecar
-          addonChartVersion: 0.1.0
-          addonChartRepository: acraksdemo.azurecr.io/helm
+          addonChartVersion: 0.2.0
+          addonRepoUrl: oci://acraksdemo.azurecr.io/helm/otel-dotnet-sidecar
         selector:
           matchExpressions:
             - key: enable_otel_operator
@@ -27,14 +26,9 @@ spec:
         - repoURL: '{{metadata.annotations.addons_repo_url}}'
           targetRevision: '{{metadata.annotations.addons_repo_revision}}'
           ref: values
-        - chart: '{{values.addonChart}}'
-          repoURL: '{{values.addonChartRepository}}'
+        - repoURL: '{{values.addonRepoUrl}}'
+          path: .
           targetRevision: '{{values.addonChartVersion}}'
-          helm:
-            releaseName: 'otel-dotnet-sidecar'
-            ignoreMissingValueFiles: true
-            valueFiles:
-              - $values/{{metadata.annotations.addons_repo_basepath}}environments/default/addons/otel-dotnet-sidecar/values.yaml
       destination:
         namespace: aspireapp
         name: '{{name}}'
