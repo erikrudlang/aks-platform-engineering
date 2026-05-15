@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-otel-test
+  name: addons-test
 spec:
   syncPolicy:
     preserveResourcesOnDeletion: false
@@ -19,7 +19,7 @@ spec:
 
   template:
     metadata:
-      name: addon-{{name}}-otel-test
+      name: addon-test
     spec:
       project: default
       sources:
