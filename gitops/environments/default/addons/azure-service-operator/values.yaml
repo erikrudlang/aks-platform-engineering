@@ -2,4 +2,5 @@ azureSubscriptionID: '33ab291e-4e99-4e5f-861a-a48b33c8261e'
 azureTenantID: '8982fdb6-6593-4f75-b60d-dff0e61525a7'
 azureClientID: 'c9bb6243-21cd-4ad8-b86d-c12183f049ca'
 useWorkloadIdentityAuth: true
-crdPattern: 'resources.azure.com/*;keyvault.azure.com/*;managedidentity.azure.com/*;eventhub.azure.com/*;storage.azure.com/*;dbforpostgresql.azure.com/*;servicebus.azure.com/*;appconfiguration.azure.com/*'
+crdPattern: 'resources.azure.com/*;keyvault.azure.com/*;managedidentity.azure.com/*;eventhub.azure.com/*;storage.azure.com/*;dbforpostgresql.azure.com/*;servicebus.azure.com/*;appconfiguration.azure.com/*;cache.azure.com/*'
+
