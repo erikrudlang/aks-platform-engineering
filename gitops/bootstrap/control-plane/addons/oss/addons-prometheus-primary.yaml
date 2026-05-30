@@ -14,8 +14,10 @@ spec:
           addonChartVersion: '84.5.0'
           addonChartRepository: https://prometheus-community.github.io/helm-charts
         selector:
-          matchLabels:
-            environment: control-plane
+          matchExpressions:
+            - key: enable_prometheus_control
+              operator: In
+              values: ['true']
   template:
     metadata:
       name: addon-{{name}}-prometheus-primary
