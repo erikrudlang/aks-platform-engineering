@@ -22,7 +22,7 @@ prometheus:
     # Configure additional ports for OTLP
     additionalPorts:
       - name: otlp-http
-        containerPort: 9090  # OTLP uses the same port as Prometheus
+        containerPort: 9091  # OTLP uses the same port as Prometheus
         protocol: TCP
     thanos:
       objectStorageConfig:
