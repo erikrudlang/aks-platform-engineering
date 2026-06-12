@@ -15,8 +15,6 @@ prometheus:
   thanosService:
     enabled: true
   prometheusSpec:
-    configMaps:
-      - prometheus-custom-config
     additionalArgs:
       - name: web.enable-otlp-receiver
         value: ""
