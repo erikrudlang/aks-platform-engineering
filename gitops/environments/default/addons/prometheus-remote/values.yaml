@@ -15,8 +15,15 @@ prometheus:
   thanosService:
     enabled: true
   prometheusSpec:
-    configMaps:
-      - prometheus-custom-config
+    otlp:
+      keepIdentifyingResourceAttributes: true
+      promoteResourceAttributes:
+        - service.name
+        - service.namespace
+        - service.instance.id
+        - deployment.environment
+        - k8s.cluster.name
+        - k8s.pod.name
     additionalArgs:
       - name: web.enable-otlp-receiver
         value: ""
