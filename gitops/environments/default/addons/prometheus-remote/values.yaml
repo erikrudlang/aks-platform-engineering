@@ -15,11 +15,11 @@ prometheus:
   thanosService:
     enabled: true
   prometheusSpec:
+    configMaps:
+      - prometheus-custom-config
     additionalArgs:
       - name: web.enable-otlp-receiver
         value: ""
-      - name: storage.tsdb.out-of-order-time-window
-        value: "30m"
     thanos:
       objectStorageConfig:
         existingSecret:
