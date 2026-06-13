@@ -43,8 +43,8 @@ loki:
       useManagedIdentity: false
       # Flag indicating whether to use a federated token for authentication
       useFederatedToken: false
-      # Domain suffix of the Azure Blob Storage service endpoint (e.g., core.windows.net)
-      endpointSuffix: core.windows.net
+      # Domain suffix of the Azure Blob Storage service endpoint (e.g., blob.core.windows.net)
+      endpointSuffix: blob.core.windows.net
     bucketNames:
       chunks: "aks-demo-loki-chunks"
       ruler: "aks-demo-loki-ruler"
