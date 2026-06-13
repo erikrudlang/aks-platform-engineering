@@ -14,7 +14,7 @@ spec:
           addonChartRepository: https://grafana-community.github.io/helm-charts
         selector:
           matchLabels:
-            environment: control-plane
+            environment: control-plane-xx
 
   template:
     metadata:
@@ -22,14 +22,14 @@ spec:
     spec:
       project: default
       sources:
-        - repoURL: '{{metadata.annotations.addons_repo_url}}'
-          targetRevision: '{{metadata.annotations.addons_repo_revision}}'
+        - repoURL: "{{metadata.annotations.addons_repo_url}}"
+          targetRevision: "{{metadata.annotations.addons_repo_revision}}"
           ref: values
-        - chart: '{{values.addonChart}}'
-          repoURL: '{{values.addonChartRepository}}'
-          targetRevision: '{{values.addonChartVersion}}'
+        - chart: "{{values.addonChart}}"
+          repoURL: "{{values.addonChartRepository}}"
+          targetRevision: "{{values.addonChartVersion}}"
           helm:
-            releaseName: 'loki-primary'
+            releaseName: "loki-primary"
             ignoreMissingValueFiles: true
             values: |
               loki:
@@ -40,7 +40,7 @@ spec:
               - $values/{{metadata.annotations.addons_repo_basepath}}environments/default/addons/loki-primary/values.yaml
       destination:
         namespace: monitoring
-        name: '{{name}}'
+        name: "{{name}}"
       syncPolicy:
         automated:
           prune: false
