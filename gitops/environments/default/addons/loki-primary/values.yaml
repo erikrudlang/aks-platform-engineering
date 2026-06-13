@@ -52,6 +52,12 @@ loki:
 
 deploymentMode: Monolithic
 
+# Disable cache deployments
+chunksCache:
+  enabled: false
+resultsCache:
+  enabled: false
+
 singleBinary:
   replicas: 1
 
