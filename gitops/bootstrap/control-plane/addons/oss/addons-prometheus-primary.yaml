@@ -15,7 +15,7 @@ spec:
           addonChartRepository: https://prometheus-community.github.io/helm-charts
         selector:
           matchExpressions:
-            - key: enable_prometheus_xxxx
+            - key: enable_prometheus_control
               operator: In
               values: ["true"]
   template:

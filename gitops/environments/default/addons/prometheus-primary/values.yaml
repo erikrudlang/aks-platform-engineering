@@ -2,9 +2,10 @@ grafana:
   enabled: true
 
 alertmanager:
-  enabled: true
+  enabled: false
 
 prometheus:
+  enabled: false
   externalLabels:
     cluster: primary
     prometheus: primary
