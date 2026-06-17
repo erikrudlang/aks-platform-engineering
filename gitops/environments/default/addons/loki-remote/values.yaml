@@ -12,6 +12,10 @@ loki:
         attributes_config:
           - action: index_label
             regex: service.group
+          - action: index_label
+            regex: service.namespace
+          - action: index_label
+            regex: k8s.namespace.name
   commonConfig:
     replication_factor: 1
 
