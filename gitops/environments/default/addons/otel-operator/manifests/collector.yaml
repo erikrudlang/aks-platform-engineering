@@ -1,9 +1,63 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: otel-collector-sa
+  namespace: argocd
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: otel-collector-role
+rules:
+  - apiGroups: [""]
+    resources:
+      - pods
+      - namespaces
+      - nodes
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups: ["apps"]
+    resources:
+      - replicasets
+      - deployments
+      - daemonsets
+      - statefulsets
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups: ["batch"]
+    resources:
+      - jobs
+      - cronjobs
+    verbs:
+      - get
+      - list
+      - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: otel-collector-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: otel-collector-role
+subjects:
+  - kind: ServiceAccount
+    name: otel-collector-sa
+    namespace: argocd
+---
 apiVersion: opentelemetry.io/v1beta1
 kind: OpenTelemetryCollector
 metadata:
   name: argocd-log-collector
   namespace: argocd
 spec:
+  serviceAccount: otel-collector-sa
   mode: daemonset
   image: otel/opentelemetry-collector-contrib:0.151.0
   volumeMounts:
