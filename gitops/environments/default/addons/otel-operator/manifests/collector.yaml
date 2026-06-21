@@ -16,6 +16,61 @@ spec:
         path: /var/log/pods
   config:
     receivers:
+      # Receive OTLP traces and logs
+      otlp:
+        protocols:
+          grpc:
+            endpoint: 0.0.0.0:4317
+          http:
+            endpoint: 0.0.0.0:4318
+      # Scrape Prometheus metrics from ArgoCD components
+      prometheus:
+        config:
+          scrape_configs:
+            - job_name: "argocd-server"
+              scrape_interval: 30s
+              kubernetes_sd_configs:
+                - role: pod
+                  namespaces:
+                    names: [argocd]
+              relabel_configs:
+                - source_labels:
+                    [__meta_kubernetes_pod_label_app_kubernetes_io_name]
+                  regex: argocd-server
+                  action: keep
+                - source_labels: [__meta_kubernetes_pod_ip]
+                  target_label: __address__
+                  replacement: "$1:8083"
+
+            - job_name: "argocd-repo-server"
+              scrape_interval: 30s
+              kubernetes_sd_configs:
+                - role: pod
+                  namespaces:
+                    names: [argocd]
+              relabel_configs:
+                - source_labels:
+                    [__meta_kubernetes_pod_label_app_kubernetes_io_name]
+                  regex: argocd-repo-server
+                  action: keep
+                - source_labels: [__meta_kubernetes_pod_ip]
+                  target_label: __address__
+                  replacement: "$1:8084"
+
+            - job_name: "argocd-application-controller"
+              scrape_interval: 30s
+              kubernetes_sd_configs:
+                - role: pod
+                  namespaces:
+                    names: [argocd]
+              relabel_configs:
+                - source_labels:
+                    [__meta_kubernetes_pod_label_app_kubernetes_io_name]
+                  regex: argocd-application-controller
+                  action: keep
+                - source_labels: [__meta_kubernetes_pod_ip]
+                  target_label: __address__
+                  replacement: "$1:8082"
       filelog:
         include:
           - /var/log/pods/argocd_*/*/*.log
@@ -35,7 +90,18 @@ spec:
         send_batch_size: 500
         timeout: 5s
 
+      filter:
+        metrics:
+          exclude:
+            match_type: strict
+            metric_names:
+              - go_memstats_alloc_bytes_total
+
     exporters:
+      otlphttp/prometheus-remote:
+        endpoint: http://prometheus-primary-kube-pr-operator.monitoring.svc.cluster.local:9090/api/v1/otlp
+        tls:
+          insecure: true
       otlphttp/loki:
         endpoint: http://loki-primary-gateway.monitoring.svc.cluster.local/otlp
         tls:
@@ -45,7 +111,15 @@ spec:
 
     service:
       pipelines:
+        metrics:
+          receivers: [prometheus]
+          processors: [resource, filter, batch]
+          exporters: [prometheusremotewrite]
+        traces:
+          receivers: [otlp]
+          processors: [resource, batch]
+          exporters: [otlp/jaeger]
         logs:
-          receivers: [filelog]
+          receivers: [otlp]
           processors: [resource, batch]
           exporters: [otlphttp/loki]
