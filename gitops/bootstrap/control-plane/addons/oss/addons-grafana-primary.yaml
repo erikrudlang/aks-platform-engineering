@@ -14,8 +14,10 @@ spec:
           addonChartVersion: 12.3.2
           addonChartRepository: https://grafana-community.github.io/helm-charts
         selector:
-          matchLabels:
-            environment: control-plane
+          matchExpressions:
+            - key: enable_grafana_primary
+              operator: In
+              values: ["true"]
   template:
     metadata:
       name: addon-{{name}}-grafana-primary
