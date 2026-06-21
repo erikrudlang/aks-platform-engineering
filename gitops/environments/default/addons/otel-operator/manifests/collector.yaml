@@ -114,7 +114,7 @@ spec:
         metrics:
           receivers: [prometheus]
           processors: [resource, filter, batch]
-          exporters: [prometheusremotewrite]
+          exporters: [otlphttp/prometheus-remote]
         logs:
           receivers: [otlp]
           processors: [resource, batch]
