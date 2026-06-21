@@ -38,6 +38,10 @@ spec:
     exporters:
       otlphttp/loki:
         endpoint: http://loki-primary-gateway.monitoring.svc.cluster.local/otlp
+        tls:
+          insecure: true
+        headers:
+          X-Scope-OrgID: "1"
 
     service:
       pipelines:
