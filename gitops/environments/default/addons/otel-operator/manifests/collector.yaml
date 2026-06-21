@@ -37,7 +37,7 @@ spec:
 
     exporters:
       otlphttp/loki:
-        endpoint: "http://loki.observability:3100/otlp"
+        endpoint: http://loki-primary-gateway.monitoring.svc.cluster.local/otlp
 
     service:
       pipelines:
