@@ -16,7 +16,7 @@ spec:
           matchExpressions:
             - key: enable_otel_operator
               operator: In
-              values: ['true']
+              values: ["true"]
 
   template:
     metadata:
@@ -24,20 +24,23 @@ spec:
     spec:
       project: default
       sources:
-        - repoURL: '{{metadata.annotations.addons_repo_url}}'
-          targetRevision: '{{metadata.annotations.addons_repo_revision}}'
+        - repoURL: "{{metadata.annotations.addons_repo_url}}"
+          targetRevision: "{{metadata.annotations.addons_repo_revision}}"
           ref: values
-        - chart: '{{values.addonChart}}'
-          repoURL: '{{values.addonChartRepository}}'
-          targetRevision: '{{values.addonChartVersion}}'
+        - chart: "{{values.addonChart}}"
+          repoURL: "{{values.addonChartRepository}}"
+          targetRevision: "{{values.addonChartVersion}}"
           helm:
-            releaseName: 'otel-operator'
+            releaseName: "otel-operator"
             ignoreMissingValueFiles: true
             valueFiles:
               - $values/{{metadata.annotations.addons_repo_basepath}}environments/default/addons/otel-operator/values.yaml
+        - repoURL: "{{metadata.annotations.addons_repo_url}}"
+          targetRevision: "{{metadata.annotations.addons_repo_revision}}"
+          path: "{{metadata.annotations.addons_repo_basepath}}environments/default/addons/otel-operator/manifests"
       destination:
         namespace: monitoring
-        name: '{{name}}'
+        name: "{{name}}"
       syncPolicy:
         automated:
           prune: false

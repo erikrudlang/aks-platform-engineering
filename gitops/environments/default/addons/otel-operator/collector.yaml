@@ -1,0 +1,47 @@
+apiVersion: opentelemetry.io/v1beta1
+kind: OpenTelemetryCollector
+metadata:
+  name: argocd-log-collector
+  namespace: argocd
+spec:
+  mode: daemonset
+  image: otel/opentelemetry-collector-contrib:0.151.0
+  volumeMounts:
+    - name: varlogpods
+      mountPath: /var/log/pods
+      readOnly: true
+  volumes:
+    - name: varlogpods
+      hostPath:
+        path: /var/log/pods
+  config:
+    receivers:
+      filelog:
+        include:
+          - /var/log/pods/argocd_*/*/*.log
+        start_at: end
+        include_file_path: true
+        include_file_name: false
+        operators:
+          - type: container
+
+    processors:
+      resource:
+        attributes:
+          - key: k8s.namespace.name
+            value: argocd
+            action: upsert
+      batch:
+        send_batch_size: 500
+        timeout: 5s
+
+    exporters:
+      otlphttp/loki:
+        endpoint: "http://loki.observability:3100/otlp"
+
+    service:
+      pipelines:
+        logs:
+          receivers: [filelog]
+          processors: [resource, batch]
+          exporters: [otlphttp/loki]
