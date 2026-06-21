@@ -1,0 +1,77 @@
+# storage:
+#   trace:
+#     backend: azure
+#     azure:
+#       container_name: tempo-traces
+#       storage_account_name: stgappgeneraluks
+#       storage_account_key: ${STORAGE_ACCOUNT_ACCESS_KEY}
+
+# distributor:
+#   extraArgs:
+#     - "-config.expand-env=true"
+#   extraEnv:
+#     - name: STORAGE_ACCOUNT_ACCESS_KEY
+#       valueFrom:
+#         secretKeyRef:
+#           name: tempo-traces-stg-key
+#           key: tempo-traces-key
+
+# blockBuilder:
+#   extraArgs:
+#     - "-config.expand-env=true"
+#   extraEnv:
+#     - name: STORAGE_ACCOUNT_ACCESS_KEY
+#       valueFrom:
+#         secretKeyRef:
+#           name: tempo-traces-stg-key
+#           key: tempo-traces-key
+
+# liveStore:
+#   extraArgs:
+#     - "-config.expand-env=true"
+#   extraEnv:
+#     - name: STORAGE_ACCOUNT_ACCESS_KEY
+#       valueFrom:
+#         secretKeyRef:
+#           name: tempo-traces-stg-key
+#           key: tempo-traces-key
+
+# querier:
+#   extraArgs:
+#     - "-config.expand-env=true"
+#   extraEnv:
+#     - name: STORAGE_ACCOUNT_ACCESS_KEY
+#       valueFrom:
+#         secretKeyRef:
+#           name: tempo-traces-stg-key
+#           key: tempo-traces-key
+
+# queryFrontend:
+#   extraArgs:
+#     - "-config.expand-env=true"
+#   extraEnv:
+#     - name: STORAGE_ACCOUNT_ACCESS_KEY
+#       valueFrom:
+#         secretKeyRef:
+#           name: tempo-traces-stg-key
+#           key: tempo-traces-key
+
+# backendScheduler:
+#   extraArgs:
+#     - "-config.expand-env=true"
+#   extraEnv:
+#     - name: STORAGE_ACCOUNT_ACCESS_KEY
+#       valueFrom:
+#         secretKeyRef:
+#           name: tempo-traces-stg-key
+#           key: tempo-traces-key
+
+# backendWorker:
+#   extraArgs:
+#     - "-config.expand-env=true"
+#   extraEnv:
+#     - name: STORAGE_ACCOUNT_ACCESS_KEY
+#       valueFrom:
+#         secretKeyRef:
+#           name: tempo-traces-stg-key
+#           key: tempo-traces-key
