@@ -153,7 +153,7 @@ spec:
 
     exporters:
       otlphttp/prometheus-remote:
-        endpoint: http://prometheus-primary-kube-pr-operator.monitoring.svc.cluster.local:9090/api/v1/otlp
+        endpoint: http://prometheus-primary-kube-pr-prometheus.monitoring.svc.cluster.local:9090/api/v1/otlp
         tls:
           insecure: true
       otlphttp/loki:
