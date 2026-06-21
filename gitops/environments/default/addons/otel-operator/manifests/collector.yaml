@@ -115,10 +115,6 @@ spec:
           receivers: [prometheus]
           processors: [resource, filter, batch]
           exporters: [prometheusremotewrite]
-        traces:
-          receivers: [otlp]
-          processors: [resource, batch]
-          exporters: [otlp/jaeger]
         logs:
           receivers: [otlp]
           processors: [resource, batch]
