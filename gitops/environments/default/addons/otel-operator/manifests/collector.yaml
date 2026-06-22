@@ -156,6 +156,10 @@ spec:
         endpoint: http://prometheus-primary-kube-pr-prometheus.monitoring.svc.cluster.local:9090/api/v1/otlp
         tls:
           insecure: true
+      otlp/tempo:
+        endpoint: grafana-tempo-distributor.monitoring.svc.cluster.local:4317
+        tls:
+          insecure: true
       otlphttp/loki:
         endpoint: http://loki-primary-gateway.monitoring.svc.cluster.local/otlp
         tls:
@@ -169,6 +173,10 @@ spec:
           receivers: [prometheus]
           processors: [resource, filter, batch]
           exporters: [otlphttp/prometheus-remote]
+        traces:
+          receivers: [otlp]
+          processors: [resource, batch]
+          exporters: [otlp/tempo]
         logs:
           receivers: [otlp]
           processors: [resource, batch]
