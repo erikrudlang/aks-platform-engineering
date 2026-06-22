@@ -1,77 +1,93 @@
-# storage:
-#   trace:
-#     backend: azure
-#     azure:
-#       container_name: tempo-traces
-#       storage_account_name: stgappgeneraluks
-#       storage_account_key: ${STORAGE_ACCOUNT_ACCESS_KEY}
+storage:
+  trace:
+    backend: azure
+    azure:
+      container_name: tempo-traces
+      storage_account_name: staksdemo
+      storage_account_key: "secret-here"
 
-# distributor:
-#   extraArgs:
-#     - "-config.expand-env=true"
-#   extraEnv:
-#     - name: STORAGE_ACCOUNT_ACCESS_KEY
-#       valueFrom:
-#         secretKeyRef:
-#           name: tempo-traces-stg-key
-#           key: tempo-traces-key
+# Enable OTLP receivers
+traces:
+  otlp:
+    grpc:
+      enabled: true
+    http:
+      enabled: true
 
-# blockBuilder:
-#   extraArgs:
-#     - "-config.expand-env=true"
-#   extraEnv:
-#     - name: STORAGE_ACCOUNT_ACCESS_KEY
-#       valueFrom:
-#         secretKeyRef:
-#           name: tempo-traces-stg-key
-#           key: tempo-traces-key
+distributor:
+  extraArgs:
+    - "-config.expand-env=true"
+  extraEnv:
+    - name: STORAGE_ACCOUNT_ACCESS_KEY
+      valueFrom:
+        secretKeyRef:
+          name: tempo-traces-stg-key
+          key: tempo-traces-key
 
-# liveStore:
-#   extraArgs:
-#     - "-config.expand-env=true"
-#   extraEnv:
-#     - name: STORAGE_ACCOUNT_ACCESS_KEY
-#       valueFrom:
-#         secretKeyRef:
-#           name: tempo-traces-stg-key
-#           key: tempo-traces-key
+blockBuilder:
+  extraArgs:
+    - "-config.expand-env=true"
+  extraEnv:
+    - name: STORAGE_ACCOUNT_ACCESS_KEY
+      valueFrom:
+        secretKeyRef:
+          name: tempo-traces-stg-key
+          key: tempo-traces-key
 
-# querier:
-#   extraArgs:
-#     - "-config.expand-env=true"
-#   extraEnv:
-#     - name: STORAGE_ACCOUNT_ACCESS_KEY
-#       valueFrom:
-#         secretKeyRef:
-#           name: tempo-traces-stg-key
-#           key: tempo-traces-key
+liveStore:
+  extraArgs:
+    - "-config.expand-env=true"
+  extraEnv:
+    - name: STORAGE_ACCOUNT_ACCESS_KEY
+      valueFrom:
+        secretKeyRef:
+          name: tempo-traces-stg-key
+          key: tempo-traces-key
 
-# queryFrontend:
-#   extraArgs:
-#     - "-config.expand-env=true"
-#   extraEnv:
-#     - name: STORAGE_ACCOUNT_ACCESS_KEY
-#       valueFrom:
-#         secretKeyRef:
-#           name: tempo-traces-stg-key
-#           key: tempo-traces-key
+querier:
+  extraArgs:
+    - "-config.expand-env=true"
+  extraEnv:
+    - name: STORAGE_ACCOUNT_ACCESS_KEY
+      valueFrom:
+        secretKeyRef:
+          name: tempo-traces-stg-key
+          key: tempo-traces-key
 
-# backendScheduler:
-#   extraArgs:
-#     - "-config.expand-env=true"
-#   extraEnv:
-#     - name: STORAGE_ACCOUNT_ACCESS_KEY
-#       valueFrom:
-#         secretKeyRef:
-#           name: tempo-traces-stg-key
-#           key: tempo-traces-key
+queryFrontend:
+  extraArgs:
+    - "-config.expand-env=true"
+  extraEnv:
+    - name: STORAGE_ACCOUNT_ACCESS_KEY
+      valueFrom:
+        secretKeyRef:
+          name: tempo-traces-stg-key
+          key: tempo-traces-key
 
-# backendWorker:
-#   extraArgs:
-#     - "-config.expand-env=true"
-#   extraEnv:
-#     - name: STORAGE_ACCOUNT_ACCESS_KEY
-#       valueFrom:
-#         secretKeyRef:
-#           name: tempo-traces-stg-key
-#           key: tempo-traces-key
+backendScheduler:
+  extraArgs:
+    - "-config.expand-env=true"
+  extraEnv:
+    - name: STORAGE_ACCOUNT_ACCESS_KEY
+      valueFrom:
+        secretKeyRef:
+          name: tempo-traces-stg-key
+          key: tempo-traces-key
+
+backendWorker:
+  extraArgs:
+    - "-config.expand-env=true"
+  extraEnv:
+    - name: STORAGE_ACCOUNT_ACCESS_KEY
+      valueFrom:
+        secretKeyRef:
+          name: tempo-traces-stg-key
+          key: tempo-traces-key
+# Ingest configuration block
+ingest:
+  kafka:
+    # The Kafka backend address.
+    address: my-cluster-kafka-bootstrap.kafka.svc.cluster.local:9092
+
+    # The Kafka topic name.
+    topic: new-topic
