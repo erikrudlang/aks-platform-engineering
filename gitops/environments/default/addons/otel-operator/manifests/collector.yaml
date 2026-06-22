@@ -178,6 +178,6 @@ spec:
           processors: [resource, batch]
           exporters: [otlp/tempo]
         logs:
-          receivers: [otlp]
+          receivers: [otlp, filelog]
           processors: [resource, batch]
           exporters: [otlphttp/loki]
