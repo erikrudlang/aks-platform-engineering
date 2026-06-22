@@ -10,7 +10,7 @@ spec:
   generators:
     - clusters:
         values:
-          addonChart: tempo
+          addonChart: tempo-distributed
           addonChartVersion: "2.1.0"
           addonChartRepository: https://grafana-community.github.io/helm-charts
         selector:
