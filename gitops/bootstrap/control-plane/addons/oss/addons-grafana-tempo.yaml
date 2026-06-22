@@ -37,7 +37,7 @@ spec:
               storage:
                 trace:
                   azure:
-                    storage_account_name: {{metadata.annotations.azure_account_key}}
+                    storage_account_key: {{metadata.annotations.azure_account_key}}
             valueFiles:
               - $values/{{metadata.annotations.addons_repo_basepath}}environments/default/addons/grafana-tempo/values.yaml
             # parameters:
@@ -53,7 +53,7 @@ spec:
             #     value: "monitoring"
             #   - name: extraObjects[0].type
             #     value: "Opaque"
-            #   - name: extraObjects[0].stringData.tempo-traces-key
+            #   - name: extraObjects[0]..tempo-traces-key
             #     value: "{{metadata.annotations.azure_account_key}}"
 
       destination:
