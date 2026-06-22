@@ -11,7 +11,7 @@ spec:
     - clusters:
         values:
           addonChart: tempo-distributed
-          addonChartVersion: "2.1.0"
+          addonChartVersion: "2.19.0"
           addonChartRepository: https://grafana-community.github.io/helm-charts
         selector:
           matchExpressions:
