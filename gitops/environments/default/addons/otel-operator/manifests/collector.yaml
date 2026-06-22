@@ -78,61 +78,61 @@ spec:
           http:
             endpoint: 0.0.0.0:4318
       # Scrape Prometheus metrics from ArgoCD components
-      prometheus:
-        config:
-          scrape_configs:
-            - job_name: "argocd-server"
-              scrape_interval: 30s
-              kubernetes_sd_configs:
-                - role: pod
-                  namespaces:
-                    names: [argocd]
-              relabel_configs:
-                - source_labels:
-                    [__meta_kubernetes_pod_label_app_kubernetes_io_name]
-                  regex: argocd-server
-                  action: keep
-                - source_labels: [__meta_kubernetes_pod_ip]
-                  target_label: __address__
-                  replacement: "$1:8083"
+      # prometheus:
+      #   config:
+      #     scrape_configs:
+      #       - job_name: "argocd-server"
+      #         scrape_interval: 30s
+      #         kubernetes_sd_configs:
+      #           - role: pod
+      #             namespaces:
+      #               names: [argocd]
+      #         relabel_configs:
+      #           - source_labels:
+      #               [__meta_kubernetes_pod_label_app_kubernetes_io_name]
+      #             regex: argocd-server
+      #             action: keep
+      #           - source_labels: [__meta_kubernetes_pod_ip]
+      #             target_label: __address__
+      #             replacement: "$1:8083"
 
-            - job_name: "argocd-repo-server"
-              scrape_interval: 30s
-              kubernetes_sd_configs:
-                - role: pod
-                  namespaces:
-                    names: [argocd]
-              relabel_configs:
-                - source_labels:
-                    [__meta_kubernetes_pod_label_app_kubernetes_io_name]
-                  regex: argocd-repo-server
-                  action: keep
-                - source_labels: [__meta_kubernetes_pod_ip]
-                  target_label: __address__
-                  replacement: "$1:8084"
+      #       - job_name: "argocd-repo-server"
+      #         scrape_interval: 30s
+      #         kubernetes_sd_configs:
+      #           - role: pod
+      #             namespaces:
+      #               names: [argocd]
+      #         relabel_configs:
+      #           - source_labels:
+      #               [__meta_kubernetes_pod_label_app_kubernetes_io_name]
+      #             regex: argocd-repo-server
+      #             action: keep
+      #           - source_labels: [__meta_kubernetes_pod_ip]
+      #             target_label: __address__
+      #             replacement: "$1:8084"
 
-            - job_name: "argocd-application-controller"
-              scrape_interval: 30s
-              kubernetes_sd_configs:
-                - role: pod
-                  namespaces:
-                    names: [argocd]
-              relabel_configs:
-                - source_labels:
-                    [__meta_kubernetes_pod_label_app_kubernetes_io_name]
-                  regex: argocd-application-controller
-                  action: keep
-                - source_labels: [__meta_kubernetes_pod_ip]
-                  target_label: __address__
-                  replacement: "$1:8082"
-      filelog:
-        include:
-          - /var/log/pods/argocd_*/*/*.log
-        start_at: end
-        include_file_path: true
-        include_file_name: false
-        operators:
-          - type: container
+      #       - job_name: "argocd-application-controller"
+      #         scrape_interval: 30s
+      #         kubernetes_sd_configs:
+      #           - role: pod
+      #             namespaces:
+      #               names: [argocd]
+      #         relabel_configs:
+      #           - source_labels:
+      #               [__meta_kubernetes_pod_label_app_kubernetes_io_name]
+      #             regex: argocd-application-controller
+      #             action: keep
+      #           - source_labels: [__meta_kubernetes_pod_ip]
+      #             target_label: __address__
+      #             replacement: "$1:8082"
+      # filelog:
+      #   include:
+      #     - /var/log/pods/argocd_*/*/*.log
+      #   start_at: end
+      #   include_file_path: true
+      #   include_file_name: false
+      #   operators:
+      #     - type: container
 
     processors:
       resource:
@@ -170,7 +170,7 @@ spec:
     service:
       pipelines:
         metrics:
-          receivers: [prometheus]
+          receivers: [otlp]
           processors: [resource, filter, batch]
           exporters: [otlphttp/prometheus-remote]
         traces:
@@ -178,6 +178,6 @@ spec:
           processors: [resource, batch]
           exporters: [otlp/tempo]
         logs:
-          receivers: [otlp, filelog]
+          receivers: [otlp]
           processors: [resource, batch]
           exporters: [otlphttp/loki]
