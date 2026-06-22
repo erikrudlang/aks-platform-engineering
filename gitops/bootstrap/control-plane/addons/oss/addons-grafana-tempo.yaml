@@ -40,21 +40,21 @@ spec:
                     storage_account_name: {{metadata.annotations.azure_account_key}}
             valueFiles:
               - $values/{{metadata.annotations.addons_repo_basepath}}environments/default/addons/grafana-tempo/values.yaml
-            parameters:
-              - name: tempoTracesKey
-                value: "{{metadata.annotations.azure_account_key}}"
-              - name: extraObjects[0].apiVersion
-                value: "v1"
-              - name: extraObjects[0].kind
-                value: "Secret"
-              - name: extraObjects[0].metadata.name
-                value: "tempo-traces-stg-key"
-              - name: extraObjects[0].metadata.namespace
-                value: "monitoring"
-              - name: extraObjects[0].type
-                value: "Opaque"
-              - name: extraObjects[0].stringData.tempo-traces-key
-                value: "{{metadata.annotations.azure_account_key}}"
+            # parameters:
+            #   - name: tempoTracesKey
+            #     value: "{{metadata.annotations.azure_account_key}}"
+            #   - name: extraObjects[0].apiVersion
+            #     value: "v1"
+            #   - name: extraObjects[0].kind
+            #     value: "Secret"
+            #   - name: extraObjects[0].metadata.name
+            #     value: "tempo-traces-stg-key"
+            #   - name: extraObjects[0].metadata.namespace
+            #     value: "monitoring"
+            #   - name: extraObjects[0].type
+            #     value: "Opaque"
+            #   - name: extraObjects[0].stringData.tempo-traces-key
+            #     value: "{{metadata.annotations.azure_account_key}}"
 
       destination:
         namespace: monitoring
