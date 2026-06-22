@@ -53,7 +53,7 @@ spec:
                 value: "monitoring"
               - name: extraObjects[0].type
                 value: "Opaque"
-              - name: extraObjects[0].data.tempo-traces-key
+              - name: extraObjects[0].stringData.tempo-traces-key
                 value: "{{metadata.annotations.azure_account_key}}"
 
       destination:
